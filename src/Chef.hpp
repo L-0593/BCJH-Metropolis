@@ -8,6 +8,7 @@
 #include <exception>
 #include "Recipe.hpp"
 #include "Values.hpp"
+#include "Types.hpp"
 #include <vector>
 class Recipe;
 
@@ -17,21 +18,23 @@ class Chef {
     static int globalAbilityMale;
     static int globalAbilityFemale;
     void addSkill(int id);
-    AbilityEnum tool = NOT_EQUIPPED;
+    ToolEnum tool = NOT_EQUIPPED;
 
   public:
     static bool coinBuffOn;
     bool male;
     bool female;
     int id;
-    AbilityEnum getTool() { return this->tool; }
+    ToolEnum getTool() { return this->tool; }
     void NoTool() { this->tool = NO_TOOL; }
     std::string name;
     Skill skill;
-    std::vector<Recipe *> recipeCapable;
+    Skill companyBuff;
+    Skill nextBuff;
+    // std::vector<Recipe *> recipeCapable;
     std::vector<Recipe *> recipeLearned;
 
-    void loadRecipeCapable(std::vector<Recipe> &recipeList);
+    // void loadRecipeCapable(std::vector<Recipe> &recipeList);
     bool isCapable(Recipe *r);
 
     static void setGlobalBuff(CookAbility buff) { globalAbilityBuff = buff; }
@@ -48,14 +51,15 @@ class Chef {
 
     Chef(Json::Value &v, int ultimateSkillId);
     Chef() {}
-    void print();
-    void modifyTool(AbilityEnum);
-    Chef addTool_modify_name(AbilityEnum);
+    void print() const;
+    void modifyTool(ToolEnum);
+    Chef addTool_modify_name(ToolEnum);
 };
 typedef std::vector<Chef> CList;
-void loadChef(CList &chefList);
+void loadChef(CList &chefList, const Json::Value &userData,
+              const Json::Value &gameData);
 
 // void loadChefTools(CList &chefList, CList &newChefList);
-std::string getToolName(AbilityEnum tool);
+std::string getToolName(ToolEnum tool);
 
 #endif

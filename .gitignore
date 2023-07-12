@@ -8,3 +8,9 @@ vcpkg/
 out/
 in/in.txt
 in/out.txt
+toolEquipped.hpp
+**/CMakeFiles/**
+cmake*
+CMake*
+Make*
+profiler/
